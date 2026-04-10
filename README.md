@@ -247,7 +247,7 @@ html+=`
 })
 
 document.getElementById("itemsList").innerHTML=html
-<meta name="google-site-verification" content="EsX2jVQutrTq8Q6rEkRDXK0xNIFjhikn-_5s-0BDiKA" />
+
 }
 
 </script>
