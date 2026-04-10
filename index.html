@@ -1,276 +1,252 @@
-<?php
-$conn = new mysqli("localhost","root","","lostfound");
-
-$lost = $conn->query("SELECT * FROM items WHERE type='lost'");
-$found = $conn->query("SELECT * FROM items WHERE type='found'");
-$all = $conn->query("SELECT * FROM items ORDER BY id DESC");
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Unknown Registry</title>
+<meta charset="UTF-8">
+<title>Unknown Registry - Lost & Found</title>
 
 <style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#f4f6f9;
-}
-
-header{
-background:#0d6efd;
-color:white;
-padding:20px;
-text-align:center;
-}
-
-nav{
-text-align:center;
-margin-top:10px;
-}
-
-nav button{
-padding:10px 20px;
-margin:5px;
-border:none;
-background:white;
-color:#0d6efd;
-font-weight:bold;
-border-radius:6px;
-cursor:pointer;
-}
-
-.container{
-width:90%;
-margin:auto;
-margin-top:30px;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-margin-bottom:20px;
-}
-
-input,textarea,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:5px;
-}
-
-button.submit{
-background:#0d6efd;
-color:white;
-border:none;
-padding:12px;
-width:100%;
-margin-top:10px;
-border-radius:5px;
-cursor:pointer;
-}
-
-.items{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.item{
-background:white;
-padding:15px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-.item img{
-width:100%;
-height:150px;
-object-fit:cover;
-border-radius:5px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-}
-
-table th, table td{
-border:1px solid #ddd;
-padding:10px;
-text-align:center;
-}
-
-table th{
-background:#0d6efd;
-color:white;
-}
-
+body{font-family:Arial;margin:0;background:#f2f2f2;}
+header{background:#1e3a8a;color:white;text-align:center;padding:15px;}
+nav{background:#111827;text-align:center;}
+nav button{background:none;border:none;color:white;padding:15px 20px;cursor:pointer;font-size:16px;}
+nav button:hover{background:#2563eb;}
+.container{display:none;padding:30px;}
+.active{display:block;}
+.card{background:white(251, 248, 236, 0.477);max-width:500px;margin:auto;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:10px;margin-top:10px;border:1px solid #ccc;border-radius:5px;}
+button.submit{background:#2563eb;color:white;border:none;padding:10px;width:100%;margin-top:15px;border-radius:5px;cursor:pointer;}
+button.submit:hover{background:#1d4ed8;}
+.items{display:flex;flex-wrap:wrap;justify-content:center;}
+.item{background:rgb(189, 190, 192);padding:15px;margin:15px;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,0.1);width:300px;text-align:center;}
+.item img{width:100%;height:220px;object-fit:cover;border-radius:8px;margin-top:10px;}
+.deleteBtn{background:red;color:white;border:none;padding:8px 15px;margin-top:10px;cursor:pointer;border-radius:5px;}
+.deleteBtn:hover{background:darkred;}
+.hero{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#2563eb,#1e3a8a);color:white;border-radius:10px;}
+.hero h1{font-size:40px;margin-bottom:10px;}
+.hero p{font-size:18px;margin-bottom:30px;}
+.hero button{padding:12px 25px;margin:10px;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+.lostBtn{background:#ef4444;color:white(71, 11, 251);}
+.foundBtn{background:#10b981;color:white;}
+.features{display:flex;flex-wrap:wrap;justify-content:center;margin-top:40px;gap:20px;}
+.feature{background:white;width:250px;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);text-align:center;}
 </style>
-
 </head>
 
 <body>
 
 <header>
 <h1>Unknown Registry</h1>
-<p>College Lost & Found System</p>
+<p>College Lost & Found Portal</p>
+</header>
 
 <nav>
 <button onclick="showPage('home')">Home</button>
-<button onclick="showPage('report')">Report Item</button>
-<button onclick="showPage('lost')">Lost Items</button>
-<button onclick="showPage('found')">Found Items</button>
-<button onclick="showPage('data')">Saved Data</button>
+<button onclick="showPage('lost')">Lost Item</button>
+<button onclick="showPage('found')">Found Item</button>
+<button onclick="showPage('items')">View Items</button>
+<button onclick="showPage('about')">About</button>
 </nav>
 
-</header>
-
-<div class="container">
-
 <!-- HOME -->
-
-<div id="home" class="page card">
-<h2>Welcome</h2>
-<p>This system helps students report and find lost items.</p>
+<div id="home" class="container active">
+<div class="hero">
+<h1>College Lost & Found Portal</h1>
+<p>Find your lost items or help others by reporting found items.</p>
+<button class="lostBtn" onclick="showPage('lost')">Report Lost Item</button>
+<button class="foundBtn" onclick="showPage('found')">Report Found Item</button>
 </div>
 
-<!-- REPORT -->
-
-<div id="report" class="page card" style="display:none">
-
-<h2>Report Item</h2>
-
-<form action="save.php" method="POST" enctype="multipart/form-data">
-
-<select name="type">
-<option value="lost">Lost Item</option>
-<option value="found">Found Item</option>
-</select>
-
-<input type="text" name="name" placeholder="Item Name" required>
-
-<textarea name="description" placeholder="Description"></textarea>
-
-<input type="text" name="location" placeholder="Location">
-
-<input type="text" name="contact" placeholder="Contact Number">
-
-<input type="file" name="image">
-
-<button class="submit">Submit</button>
-
-</form>
-
+<div class="features">
+<div class="feature"><h3>Report Lost</h3><p>Quickly report your lost items in college.</p></div>
+<div class="feature"><h3>Report Found</h3><p>Help others by submitting found items.</p></div>
+<div class="feature"><h3>View Items</h3><p>Browse all lost and found items easily.</p></div>
+</div>
 </div>
 
-<!-- LOST ITEMS -->
-
-<div id="lost" class="page" style="display:none">
-
-<h2>Lost Items</h2>
-
-<div class="items">
-
-<?php
-while($row=$lost->fetch_assoc()){
-?>
-
-<div class="item">
-<img src="uploads/<?php echo $row['image']; ?>">
-<h3><?php echo $row['name']; ?></h3>
-<p><?php echo $row['description']; ?></p>
-<p><b>Location:</b> <?php echo $row['location']; ?></p>
-<p><b>Contact:</b> <?php echo $row['contact']; ?></p>
+<!-- ABOUT -->
+<div id="about" class="container">
+<div class="card">
+<h2>About This Website</h2>
+<p>Unknown Registry is a simple <b>College Lost & Found Portal</b> created to help students easily report and find lost items inside the campus.</p>
+<p>Students can report lost items, upload images, and contact the person who found them.</p>
+<p>This project is created for <b>college use to make the lost and found process simple and fast.</b></p>
+<p>Team Members: Prince, Pintu, Masnas</p>
+</div>
 </div>
 
-<?php } ?>
+<!-- LOST FORM -->
+<div id="lost" class="container">
+<div class="card">
+<h2>Report Lost Item</h2>
+
+<input type="text" id="lostName" placeholder="Your Name">
+<input type="email" id="lostEmail" placeholder="Your Email">
+<input type="text" id="lostItem" placeholder="Item Name">
+<textarea id="lostDesc" placeholder="Description"></textarea>
+<input type="text" id="lostLocation" placeholder="Lost Location (optional)">
+<input type="tel" id="lostContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="lostImage">
+
+<button class="submit" onclick="saveLost()">Submit</button>
 
 </div>
 </div>
 
-<!-- FOUND ITEMS -->
+<!-- FOUND FORM -->
+<div id="found" class="container">
+<div class="card">
+<h2>Report Found Item</h2>
 
-<div id="found" class="page" style="display:none">
+<input type="text" id="foundName" placeholder="Your Name">
+<input type="email" id="foundEmail" placeholder="Your Email">
+<input type="text" id="foundItem" placeholder="Item Name">
+<textarea id="foundDesc" placeholder="Description"></textarea>
+<input type="text" id="foundLocation" placeholder="Found Location (e.g., Cafeteria)">
+<input type="tel" id="foundContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="foundImage">
 
-<h2>Found Items</h2>
-
-<div class="items">
-
-<?php
-while($row=$found->fetch_assoc()){
-?>
-
-<div class="item">
-<img src="uploads/<?php echo $row['image']; ?>">
-<h3><?php echo $row['name']; ?></h3>
-<p><?php echo $row['description']; ?></p>
-<p><b>Location:</b> <?php echo $row['location']; ?></p>
-<p><b>Contact:</b> <?php echo $row['contact']; ?></p>
-</div>
-
-<?php } ?>
+<button class="submit" onclick="saveFound()">Submit</button>
 
 </div>
 </div>
 
-<!-- ALL DATA PAGE -->
-
-<div id="data" class="page" style="display:none">
-
-<h2>All Saved Data</h2>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Type</th>
-<th>Name</th>
-<th>Description</th>
-<th>Location</th>
-<th>Contact</th>
-<th>Image</th>
-</tr>
-
-<?php
-while($row=$all->fetch_assoc()){
-?>
-
-<tr>
-<td><?php echo $row['id']; ?></td>
-<td><?php echo $row['type']; ?></td>
-<td><?php echo $row['name']; ?></td>
-<td><?php echo $row['description']; ?></td>
-<td><?php echo $row['location']; ?></td>
-<td><?php echo $row['contact']; ?></td>
-<td><img src="uploads/<?php echo $row['image']; ?>" width="60"></td>
-</tr>
-
-<?php } ?>
-
-</table>
-
-</div>
-
+<!-- VIEW ITEMS -->
+<div id="items" class="container">
+<h2 style="text-align:center;">All Items</h2>
+<div id="itemsList" class="items"></div>
 </div>
 
 <script>
 
 function showPage(page){
+document.querySelectorAll('.container').forEach(c=> c.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+if(page==="items"){ displayItems(); }
+}
 
-var pages=document.querySelectorAll(".page");
+// ✅ UPDATED ONLY THIS FUNCTION
+function saveLost(){
 
-pages.forEach(function(p){
-p.style.display="none";
-});
+if(lostContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
+}
 
-document.getElementById(page).style.display="block";
+// ⭐ LOCATION FIX
+let location = lostLocation.value.trim() === "" ? "Unknown" : lostLocation.value;
+
+let file=document.getElementById("lostImage").files[0]
+let reader=new FileReader()
+
+reader.onload=function(){
+
+let data={
+type:"Lost",
+name:lostName.value,
+email:lostEmail.value,
+item:lostItem.value,
+desc:lostDesc.value,
+location:location,
+contact:lostContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Lost item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+// बाकी code same
+function saveFound(){
+
+if(foundContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
+}
+
+let file=document.getElementById("foundImage").files[0]
+let reader=new FileReader()
+
+reader.onload=function(){
+
+let data={
+type:"Found",
+name:foundName.value,
+email:foundEmail.value,
+item:foundItem.value,
+desc:foundDesc.value,
+location:foundLocation.value,
+contact:foundContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Found item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+function saveData(data){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.push(data)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
+}
+
+function deleteItem(index){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.splice(index,1)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
+}
+
+function displayItems(){
+
+let items=JSON.parse(localStorage.getItem("items")) || []
+
+let html=""
+
+items.forEach((i,index)=>{
+
+html+=`
+
+<div class="item">
+
+<b>${i.type} Item</b><br><br>
+
+<img src="${i.image}">
+
+<p><b>Name:</b> ${i.name}</p>
+<p><b>Email:</b> ${i.email}</p>
+<p><b>Item:</b> ${i.item}</p>
+<p><b>Description:</b> ${i.desc}</p>
+<p><b>${i.type==='Lost'?'Lost Location':'Found Location'}:</b> ${i.location}</p>
+<p><b>Contact:</b> ${i.contact}</p>
+
+<button class="deleteBtn" onclick="deleteItem(${index})">Delete</button>
+
+</div>
+
+`
+
+})
+
+document.getElementById("itemsList").innerHTML=html
 
 }
 
