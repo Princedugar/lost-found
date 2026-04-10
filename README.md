@@ -1,72 +1,256 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hostel Management</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Unknown Registry - Lost & Found</title>
+
+<style>
+body{font-family:Arial;margin:0;background:#f2f2f2;}
+header{background:#1e3a8a;color:white;text-align:center;padding:15px;}
+nav{background:#111827;text-align:center;}
+nav button{background:none;border:none;color:white;padding:15px 20px;cursor:pointer;font-size:16px;}
+nav button:hover{background:#2563eb;}
+.container{display:none;padding:30px;}
+.active{display:block;}
+.card{background:white(251, 248, 236, 0.477);max-width:500px;margin:auto;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:10px;margin-top:10px;border:1px solid #ccc;border-radius:5px;}
+button.submit{background:#2563eb;color:white;border:none;padding:10px;width:100%;margin-top:15px;border-radius:5px;cursor:pointer;}
+button.submit:hover{background:#1d4ed8;}
+.items{display:flex;flex-wrap:wrap;justify-content:center;}
+.item{background:rgb(189, 190, 192);padding:15px;margin:15px;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,0.1);width:300px;text-align:center;}
+.item img{width:100%;height:220px;object-fit:cover;border-radius:8px;margin-top:10px;}
+.deleteBtn{background:red;color:white;border:none;padding:8px 15px;margin-top:10px;cursor:pointer;border-radius:5px;}
+.deleteBtn:hover{background:darkred;}
+.hero{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#2563eb,#1e3a8a);color:white;border-radius:10px;}
+.hero h1{font-size:40px;margin-bottom:10px;}
+.hero p{font-size:18px;margin-bottom:30px;}
+.hero button{padding:12px 25px;margin:10px;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+.lostBtn{background:#ef4444;color:white(71, 11, 251);}
+.foundBtn{background:#10b981;color:white;}
+.features{display:flex;flex-wrap:wrap;justify-content:center;margin-top:40px;gap:20px;}
+.feature{background:white;width:250px;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);text-align:center;}
+</style>
 </head>
 
 <body>
 
-<!-- HERO SECTION -->
-<section class="hero">
-    <h1>🏨 Welcome to Hostel Management</h1>
-    <p>Manage Rooms, Guests & Billing Easily</p>
-    <button onclick="enterApp()">Get Started</button>
-</section>
+<header>
+<h1>Unknown Registry</h1>
+<p>College Lost & Found Portal</p>
+</header>
 
-<!-- MAIN APP (Hidden First) -->
-<div class="app" id="app">
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('lost')">Lost Item</button>
+<button onclick="showPage('found')">Found Item</button>
+<button onclick="showPage('items')">View Items</button>
+<button onclick="showPage('about')">About</button>
+</nav>
 
-    <header>
-        <h2>Dashboard</h2>
-    </header>
+<!-- HOME -->
+<div id="home" class="container active">
+<div class="hero">
+<h1>College Lost & Found Portal</h1>
+<p>Find your lost items or help others by reporting found items.</p>
+<button class="lostBtn" onclick="showPage('lost')">Report Lost Item</button>
+<button class="foundBtn" onclick="showPage('found')">Report Found Item</button>
+</div>
 
-    <!-- CARDS -->
-    <div class="cards">
-        <div class="card">👤 Guests <span id="totalGuests">0</span></div>
-        <div class="card">💰 Revenue ₹ <span id="totalRevenue">0</span></div>
-        <div class="card">🛏 Rooms <span id="roomsUsed">0</span></div>
-    </div>
+<div class="features">
+<div class="feature"><h3>Report Lost</h3><p>Quickly report your lost items in college.</p></div>
+<div class="feature"><h3>Report Found</h3><p>Help others by submitting found items.</p></div>
+<div class="feature"><h3>View Items</h3><p>Browse all lost and found items easily.</p></div>
+</div>
+</div>
 
-    <!-- FORM -->
-    <div class="form-box">
-        <h3>Check-In Guest</h3>
+<!-- ABOUT -->
+<div id="about" class="container">
+<div class="card">
+<h2>About This Website</h2>
+<p>Unknown Registry is a simple <b>College Lost & Found Portal</b> created to help students easily report and find lost items inside the campus.</p>
+<p>Students can report lost items, upload images, and contact the person who found them.</p>
+<p>This project is created for <b>college use to make the lost and found process simple and fast.</b></p>
+<p>Team Members: Prince, Pintu, Masnas</p>
+</div>
+</div>
 
-        <input type="text" id="name" placeholder="Guest Name">
-        <input type="number" id="room" placeholder="Room Number">
-        <input type="number" id="days" placeholder="Days">
-        <input type="number" id="nights" placeholder="Nights">
+<!-- LOST FORM -->
+<div id="lost" class="container">
+<div class="card">
+<h2>Report Lost Item</h2>
 
-        <select id="roomType">
-            <option value="">Room Type</option>
-            <option value="Single">Single ₹500</option>
-            <option value="Double">Double ₹800</option>
-            <option value="Deluxe">Deluxe ₹1200</option>
-        </select>
+<input type="text" id="lostName" placeholder="Your Name">
+<input type="email" id="lostEmail" placeholder="Your Email">
+<input type="text" id="lostItem" placeholder="Item Name">
+<textarea id="lostDesc" placeholder="Description"></textarea>
+<input type="text" id="lostLocation" placeholder="Lost Location (optional)">
+<input type="tel" id="lostContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="lostImage">
 
-        <button onclick="addGuest()">Check-In</button>
-    </div>
+<button class="submit" onclick="saveLost()">Submit</button>
 
-    <!-- TABLE -->
-    <div class="table-box">
-        <h3>Guest Records</h3>
+</div>
+</div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Room</th>
-                    <th>Total ₹</th>
-                </tr>
-            </thead>
-            <tbody id="recordTable"></tbody>
-        </table>
-    </div>
+<!-- FOUND FORM -->
+<div id="found" class="container">
+<div class="card">
+<h2>Report Found Item</h2>
+
+<input type="text" id="foundName" placeholder="Your Name">
+<input type="email" id="foundEmail" placeholder="Your Email">
+<input type="text" id="foundItem" placeholder="Item Name">
+<textarea id="foundDesc" placeholder="Description"></textarea>
+<input type="text" id="foundLocation" placeholder="Found Location (e.g., Cafeteria)">
+<input type="tel" id="foundContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="foundImage">
+
+<button class="submit" onclick="saveFound()">Submit</button>
+
+</div>
+</div>
+
+<!-- VIEW ITEMS -->
+<div id="items" class="container">
+<h2 style="text-align:center;">All Items</h2>
+<div id="itemsList" class="items"></div>
+</div>
+
+<script>
+
+function showPage(page){
+document.querySelectorAll('.container').forEach(c=> c.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+if(page==="items"){ displayItems(); }
+}
+
+// ✅ UPDATED ONLY THIS FUNCTION
+function saveLost(){
+
+if(lostContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
+}
+
+// ⭐ LOCATION FIX
+let location = lostLocation.value.trim() === "" ? "Unknown" : lostLocation.value;
+
+let file=document.getElementById("lostImage").files[0]
+let reader=new FileReader()
+
+reader.onload=function(){
+
+let data={
+type:"Lost",
+name:lostName.value,
+email:lostEmail.value,
+item:lostItem.value,
+desc:lostDesc.value,
+location:location,
+contact:lostContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Lost item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+// बाकी code same
+function saveFound(){
+
+if(foundContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
+}
+
+let file=document.getElementById("foundImage").files[0]
+let reader=new FileReader()
+
+reader.onload=function(){
+
+let data={
+type:"Found",
+name:foundName.value,
+email:foundEmail.value,
+item:foundItem.value,
+desc:foundDesc.value,
+location:foundLocation.value,
+contact:foundContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Found item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+function saveData(data){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.push(data)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
+}
+
+function deleteItem(index){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.splice(index,1)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
+}
+
+function displayItems(){
+
+let items=JSON.parse(localStorage.getItem("items")) || []
+
+let html=""
+
+items.forEach((i,index)=>{
+
+html+=`
+
+<div class="item">
+
+<b>${i.type} Item</b><br><br>
+
+<img src="${i.image}">
+
+<p><b>Name:</b> ${i.name}</p>
+<p><b>Email:</b> ${i.email}</p>
+<p><b>Item:</b> ${i.item}</p>
+<p><b>Description:</b> ${i.desc}</p>
+<p><b>${i.type==='Lost'?'Lost Location':'Found Location'}:</b> ${i.location}</p>
+<p><b>Contact:</b> ${i.contact}</p>
+
+<button class="deleteBtn" onclick="deleteItem(${index})">Delete</button>
 
 </div>
 
-<script src="script.js"></script>
-<h2>Total Revenue: ₹ <span id="totalBill">0</span></h2>
+`
+
+})
+
+document.getElementById("itemsList").innerHTML=html
+
+}
+
+</script>
 
 </body>
 </html>
