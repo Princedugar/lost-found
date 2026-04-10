@@ -247,7 +247,8 @@ html+=`
 })
 
 document.getElementById("itemsList").innerHTML=html
-
+<meta name="google-site-verification" content="XXXXX" />
+  
 }
 
 </script>
