@@ -248,7 +248,7 @@ html+=`
 
 document.getElementById("itemsList").innerHTML=html
 <meta name="google-site-verification" content="XXXXX" />
-  
+  <meta name="google-site-verification" content="QpveDV13U4FLeWIOXBDABJ_kdg9WgT2gziR1q5hAN4o" />
 }
 
 </script>
