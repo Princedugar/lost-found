@@ -12,15 +12,23 @@ nav button{background:none;border:none;color:white;padding:15px 20px;cursor:poin
 nav button:hover{background:#2563eb;}
 .container{display:none;padding:30px;}
 .active{display:block;}
-.card{background:white;max-width:500px;margin:auto;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
-input,textarea{width:100%;padding:10px;margin-top:10px;border:1px solid #ccc;border-radius:5px;box-sizing: border-box;}
+.card{background:white(251, 248, 236, 0.477);max-width:500px;margin:auto;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+input,textarea{width:100%;padding:10px;margin-top:10px;border:1px solid #ccc;border-radius:5px;}
 button.submit{background:#2563eb;color:white;border:none;padding:10px;width:100%;margin-top:15px;border-radius:5px;cursor:pointer;}
 button.submit:hover{background:#1d4ed8;}
 .items{display:flex;flex-wrap:wrap;justify-content:center;}
 .item{background:rgb(189, 190, 192);padding:15px;margin:15px;border-radius:10px;box-shadow:0 0 8px rgba(0,0,0,0.1);width:300px;text-align:center;}
 .item img{width:100%;height:220px;object-fit:cover;border-radius:8px;margin-top:10px;}
 .deleteBtn{background:red;color:white;border:none;padding:8px 15px;margin-top:10px;cursor:pointer;border-radius:5px;}
+.deleteBtn:hover{background:darkred;}
 .hero{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#2563eb,#1e3a8a);color:white;border-radius:10px;}
+.hero h1{font-size:40px;margin-bottom:10px;}
+.hero p{font-size:18px;margin-bottom:30px;}
+.hero button{padding:12px 25px;margin:10px;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+.lostBtn{background:#ef4444;color:white(71, 11, 251);}
+.foundBtn{background:#10b981;color:white;}
+.features{display:flex;flex-wrap:wrap;justify-content:center;margin-top:40px;gap:20px;}
+.feature{background:white;width:250px;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);text-align:center;}
 </style>
 </head>
 
@@ -39,170 +47,210 @@ button.submit:hover{background:#1d4ed8;}
 <button onclick="showPage('about')">About</button>
 </nav>
 
+<!-- HOME -->
 <div id="home" class="container active">
-    <div class="hero">
-        <h1>College Lost & Found Portal</h1>
-        <p>Find your lost items or help others by reporting found items.</p>
-        <button onclick="showPage('lost')" style="background:#ef4444; color:white; padding:12px 25px; border:none; border-radius:6px; cursor:pointer;">Report Lost Item</button>
-        <button onclick="showPage('found')" style="background:#10b981; color:white; padding:12px 25px; border:none; border-radius:6px; cursor:pointer;">Report Found Item</button>
-    </div>
+<div class="hero">
+<h1>College Lost & Found Portal</h1>
+<p>Find your lost items or help others by reporting found items.</p>
+<button class="lostBtn" onclick="showPage('lost')">Report Lost Item</button>
+<button class="foundBtn" onclick="showPage('found')">Report Found Item</button>
 </div>
 
+<div class="features">
+<div class="feature"><h3>Report Lost</h3><p>Quickly report your lost items in college.</p></div>
+<div class="feature"><h3>Report Found</h3><p>Help others by submitting found items.</p></div>
+<div class="feature"><h3>View Items</h3><p>Browse all lost and found items easily.</p></div>
+</div>
+</div>
+
+<!-- ABOUT -->
 <div id="about" class="container">
-    <div class="card">
-        <h2>About This Website</h2>
-        <p>Created for college use to make the lost and found process simple and fast.</p>
-        <p><b>Team Members:</b> Prince Dugar, Pintu, Manas</p>
-    </div>
+<div class="card">
+<h2>About This Website</h2>
+<p>Unknown Registry is a simple <b>College Lost & Found Portal</b> created to help students easily report and find lost items inside the campus.</p>
+<p>Students can report lost items, upload images, and contact the person who found them.</p>
+<p>This project is created for <b>college use to make the lost and found process simple and fast.</b></p>
+<p>Team Members: Prince, Pintu, Masnas</p>
+</div>
 </div>
 
+<!-- LOST FORM -->
 <div id="lost" class="container">
-    <div class="card">
-        <h2>Report Lost Item</h2>
-        <input type="text" id="lostName" placeholder="Your Name">
-        <input type="email" id="lostEmail" placeholder="Your Email">
-        <input type="text" id="lostItem" placeholder="Item Name">
-        <textarea id="lostDesc" placeholder="Description"></textarea>
-        <input type="text" id="lostLocation" placeholder="Lost Location">
-        <input type="tel" id="lostContact" placeholder="Contact Number" maxlength="10">
-        <input type="file" id="lostImage">
-        <button class="submit" onclick="saveLost()">Submit to Database</button>
-    </div>
+<div class="card">
+<h2>Report Lost Item</h2>
+
+<input type="text" id="lostName" placeholder="Your Name">
+<input type="email" id="lostEmail" placeholder="Your Email">
+<input type="text" id="lostItem" placeholder="Item Name">
+<textarea id="lostDesc" placeholder="Description"></textarea>
+<input type="text" id="lostLocation" placeholder="Lost Location (optional)">
+<input type="tel" id="lostContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="lostImage">
+
+<button class="submit" onclick="saveLost()">Submit</button>
+
+</div>
 </div>
 
+<!-- FOUND FORM -->
 <div id="found" class="container">
-    <div class="card">
-        <h2>Report Found Item</h2>
-        <input type="text" id="foundName" placeholder="Your Name">
-        <input type="email" id="foundEmail" placeholder="Your Email">
-        <input type="text" id="foundItem" placeholder="Item Name">
-        <textarea id="foundDesc" placeholder="Description"></textarea>
-        <input type="text" id="foundLocation" placeholder="Found Location">
-        <input type="tel" id="foundContact" placeholder="Contact Number" maxlength="10">
-        <input type="file" id="foundImage">
-        <button class="submit" onclick="saveFound()">Submit to Database</button>
-    </div>
+<div class="card">
+<h2>Report Found Item</h2>
+
+<input type="text" id="foundName" placeholder="Your Name">
+<input type="email" id="foundEmail" placeholder="Your Email">
+<input type="text" id="foundItem" placeholder="Item Name">
+<textarea id="foundDesc" placeholder="Description"></textarea>
+<input type="text" id="foundLocation" placeholder="Found Location (e.g., Cafeteria)">
+<input type="tel" id="foundContact" placeholder="Contact Number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input type="file" id="foundImage">
+
+<button class="submit" onclick="saveFound()">Submit</button>
+
+</div>
 </div>
 
+<!-- VIEW ITEMS -->
 <div id="items" class="container">
-    <h2 style="text-align:center;">All Items (Global)</h2>
-    <div id="itemsList" class="items"></div>
+<h2 style="text-align:center;">All Items</h2>
+<div id="itemsList" class="items"></div>
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-// Firebase Config (Locked in)
-const firebaseConfig = {
-  apiKey: "AIzaSyCoBuNUUV4Nq6N3GhNS-fEFtBmqIeTrSvs",
-  authDomain: "unknown-registory-b39c3.firebaseapp.com",
-  databaseURL: "https://unknown-registory-b39c3-default-rtdb.firebaseio.com",
-  projectId: "unknown-registory-b39c3",
-  storageBucket: "unknown-registory-b39c3.firebasestorage.app",
-  messagingSenderId: "563385942428",
-  appId: "1:563385942428:web:41142fa41351763bd00859"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
 
 function showPage(page){
-    document.querySelectorAll('.container').forEach(c=> c.classList.remove("active"));
-    document.getElementById(page).classList.add("active");
-    if(page==="items"){ displayItems(); }
+document.querySelectorAll('.container').forEach(c=> c.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+if(page==="items"){ displayItems(); }
 }
 
+// ✅ UPDATED ONLY THIS FUNCTION
 function saveLost(){
-    let contact = document.getElementById("lostContact").value;
-    if(contact.length != 10){
-        alert("Enter 10 digit number");
-        return;
-    }
 
-    let file = document.getElementById("lostImage").files[0];
-    let reader = new FileReader();
-
-    reader.onload = function(){
-        let data = {
-            type: "Lost",
-            name: document.getElementById("lostName").value,
-            email: document.getElementById("lostEmail").value,
-            item: document.getElementById("lostItem").value,
-            desc: document.getElementById("lostDesc").value,
-            location: document.getElementById("lostLocation").value || "Unknown",
-            contact: contact,
-            image: reader.result
-        };
-        db.ref("all_items").push(data).then(() => {
-            alert("Lost Item Saved!");
-            showPage('items');
-        });
-    };
-
-    if(file){ reader.readAsDataURL(file); } else { reader.onload(); }
+if(lostContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
 }
 
+// ⭐ LOCATION FIX
+let location = lostLocation.value.trim() === "" ? "Unknown" : lostLocation.value;
+
+let file=document.getElementById("lostImage").files[0]
+let reader=new FileReader()
+
+reader.onload=function(){
+
+let data={
+type:"Lost",
+name:lostName.value,
+email:lostEmail.value,
+item:lostItem.value,
+desc:lostDesc.value,
+location:location,
+contact:lostContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Lost item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+// बाकी code same
 function saveFound(){
-    let contact = document.getElementById("foundContact").value;
-    if(contact.length != 10){
-        alert("Enter 10 digit number");
-        return;
-    }
 
-    let file = document.getElementById("foundImage").files[0];
-    let reader = new FileReader();
+if(foundContact.value.length!=10){
+alert("Please enter valid 10 digit number");
+return;
+}
 
-    reader.onload = function(){
-        let data = {
-            type: "Found",
-            name: document.getElementById("foundName").value,
-            email: document.getElementById("foundEmail").value,
-            item: document.getElementById("foundItem").value,
-            desc: document.getElementById("foundDesc").value,
-            location: document.getElementById("foundLocation").value,
-            contact: contact,
-            image: reader.result || "https://via.placeholder.com/220"
-        };
-        db.ref("all_items").push(data).then(() => {
-            alert("Found Item Saved!");
-            showPage('items');
-        });
-    };
+let file=document.getElementById("foundImage").files[0]
+let reader=new FileReader()
 
-    if(file){ reader.readAsDataURL(file); } else { reader.onload(); }
+reader.onload=function(){
+
+let data={
+type:"Found",
+name:foundName.value,
+email:foundEmail.value,
+item:foundItem.value,
+desc:foundDesc.value,
+location:foundLocation.value,
+contact:foundContact.value,
+image:reader.result
+}
+
+saveData(data)
+alert("Found item saved!")
+
+}
+
+if(file){
+reader.readAsDataURL(file)
+}else{
+reader.onload()
+}
+
+}
+
+function saveData(data){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.push(data)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
+}
+
+function deleteItem(index){
+let items=JSON.parse(localStorage.getItem("items")) || []
+items.splice(index,1)
+localStorage.setItem("items",JSON.stringify(items))
+displayItems()
 }
 
 function displayItems(){
-    const itemsList = document.getElementById("itemsList");
-    db.ref("all_items").on("value", (snapshot) => {
-        const items = snapshot.val();
-        let html = "";
-        if(!items) {
-            itemsList.innerHTML = "<p>No items found.</p>";
-            return;
-        }
-        Object.keys(items).reverse().forEach(key => {
-            let i = items[key];
-            html += `
-            <div class="item">
-                <b>${i.type} Item</b><br><br>
-                <img src="${i.image || 'https://via.placeholder.com/220'}">
-                <p><b>Item:</b> ${i.item}</p>
-                <p><b>By:</b> ${i.name}</p>
-                <p><b>Contact:</b> ${i.contact}</p>
-                <button class="deleteBtn" onclick="deleteItem('${key}')">Delete</button>
-            </div>`;
-        });
-        itemsList.innerHTML = html;
-    });
+
+let items=JSON.parse(localStorage.getItem("items")) || []
+
+let html=""
+
+items.forEach((i,index)=>{
+
+html+=`
+
+<div class="item">
+
+<b>${i.type} Item</b><br><br>
+
+<img src="${i.image}">
+
+<p><b>Name:</b> ${i.name}</p>
+<p><b>Email:</b> ${i.email}</p>
+<p><b>Item:</b> ${i.item}</p>
+<p><b>Description:</b> ${i.desc}</p>
+<p><b>${i.type==='Lost'?'Lost Location':'Found Location'}:</b> ${i.location}</p>
+<p><b>Contact:</b> ${i.contact}</p>
+
+<button class="deleteBtn" onclick="deleteItem(${index})">Delete</button>
+
+</div>
+
+`
+
+})
+
+document.getElementById("itemsList").innerHTML=html
+
 }
 
-function deleteItem(key){
-    if(confirm("Delete this item?")){
-        db.ref("all_items/" + key).remove();
-    }
-}
 </script>
+
 </body>
 </html>
