@@ -1,9 +1,14 @@
-/* ================= BODY BACKGROUND ================= */
+/* BODY BACKGROUND */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     min-height: 100vh;
-    background: linear-gradient(135deg, #2299ee, #bbdefb, #eae1fe);
+    background: linear-gradient(
+        135deg,
+        #2299ee,
+        #bbdefb,
+        #eae1fe
+    );
     background-attachment: fixed;
 }
 
@@ -21,7 +26,7 @@ body::before {
     z-index: -1;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 header {
     background: #3498db;
     color: rgb(37, 14, 203);
@@ -47,14 +52,14 @@ header nav button:hover {
     background: #1c5980;
 }
 
-/* ================= CONTAINER ================= */
+/* MAIN CONTAINER */
 .container {
     max-width: 900px;
     margin: auto;
     padding: 20px;
 }
 
-/* ================= PAGE SWITCH ================= */
+/* PAGE SWITCH */
 .page {
     display: none;
 }
@@ -63,7 +68,7 @@ header nav button:hover {
     display: block;
 }
 
-/* LOST PAGE */
+/* LOST PAGE BLUE BACKGROUND */
 #lost.page.active {
     background: #3498db;
     min-height: 100vh;
@@ -71,16 +76,16 @@ header nav button:hover {
     border-radius: 8px;
 }
 
-/* ================= IMAGE ================= */
+/* IMAGE STYLE */
 img {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px;
-    width: 100%;
-    max-width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+  max-width: 400px;
 }
 
-/* ================= FORMS ================= */
+/* FORMS */
 form {
     display: flex;
     flex-wrap: wrap;
@@ -108,7 +113,7 @@ form button {
     cursor: pointer;
 }
 
-/* ================= SEARCH ================= */
+/* SEARCH BAR */
 .search-container {
     position: relative;
     width: 100%;
@@ -123,6 +128,7 @@ form button {
     font-size: 14px;
 }
 
+/* SEARCH ICON */
 .search-icon {
     position: absolute;
     right: 10px;
@@ -133,7 +139,7 @@ form button {
     color: #555;
 }
 
-/* ================= ITEM LIST ================= */
+/* ITEM LIST */
 .item-list .item-box {
     background: rgb(22, 64, 205);
     padding: 12px;
@@ -143,9 +149,11 @@ form button {
     position: relative;
 }
 
+/* LOST / FOUND COLORS */
 .item-box.lost { border-color: red; }
 .item-box.found { border-color: green; }
 
+/* ITEM IMAGE */
 .item-img {
     max-width: 120px;
     display: block;
@@ -166,49 +174,15 @@ form button {
     cursor: pointer;
 }
 
-/* ================= RESPONSIVE DESIGN ================= */
-
-/* 📱 Mobile */
-@media (max-width: 600px) {
-
-    .container {
-        padding: 10px;
-    }
+/* RESPONSIVE DESIGN */
+@media(max-width:600px){
 
     form {
         flex-direction: column;
     }
 
     form button {
-        width: 100%;
-    }
-
-    header {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .item-img {
-        max-width: 100%;
-    }
-}
-
-/* 📲 Tablet */
-@media (min-width: 601px) and (max-width: 1024px) {
-
-    .container {
-        max-width: 700px;
-    }
-
-    form button {
         flex: 1;
     }
-}
 
-/* 💻 Desktop */
-@media (min-width: 1025px) {
-
-    .container {
-        max-width: 900px;
-    }
 }
